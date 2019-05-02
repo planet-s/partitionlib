@@ -2,7 +2,7 @@ use super::Result;
 use std::io::{Read, Write, Seek, SeekFrom};
 use std::path::Path;
 use mbr::partition::read_partitions;
-
+use gpt;
 
 #[derive(Clone, Debug)]
 pub struct partition {
@@ -44,7 +44,12 @@ pub fn get_partitions(path: &Path) -> Result<Vec<partition>> {
         }
     }
     else {
-        
+        let cfg = gpt::GptConfig::new().writable(false);
+        let disk = cfg.open(path).expect("failed to open disk");
+        for (id, partiton) in disk.partitions().iter() {
+
+        }
+
     }
 
     Ok(res)
