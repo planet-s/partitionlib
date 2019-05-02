@@ -7,3 +7,4 @@ edition = "2018"
 [dependencies]
 gpt = "0.6.1"
 mbr = "0.2.2"
+uuid = { version = "~0.7", features = ["v4"] }

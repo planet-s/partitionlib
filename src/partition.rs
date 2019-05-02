@@ -2,6 +2,7 @@ use super::Result;
 use std::io::{Read, Write, Seek, SeekFrom};
 use std::path::Path;
 use mbr::partition::read_partitions;
+use uuid::Uuid;
 use gpt;
 
 #[derive(Clone, Debug)]
@@ -12,6 +13,7 @@ pub struct partition {
     pub size : u64,
     pub flags : Option<u64>,
     pub name : Option<String>,
+    pub uuid : Option<Uuid>
 }
 
 
@@ -37,7 +39,8 @@ pub fn get_partitions(path: &Path) -> Result<Vec<partition>> {
                 start_lba : part.p_lba as u64,
                 size : part.p_size as u64,
                 flags : None,
-                name : None
+                name : None,
+                uuid : None
             };
 
             res.push(t);
@@ -46,8 +49,15 @@ pub fn get_partitions(path: &Path) -> Result<Vec<partition>> {
     else {
         let cfg = gpt::GptConfig::new().writable(false);
         let disk = cfg.open(path).expect("failed to open disk");
-        for (id, partiton) in disk.partitions().iter() {
-
+        for (id, part) in disk.partitions().iter() {
+            let t = partition {
+                start_lba : part.first_lba,
+                size : part.last_lba - part.first_lba + 1,
+                flags : Some(part.flags),
+                name : Some(part.name.clone()),
+                uuid : Some(part.part_guid)
+            };
+            res.push(t);
         }
 
     }
