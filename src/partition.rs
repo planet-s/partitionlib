@@ -21,7 +21,10 @@ pub fn is_mbr(path: &Path) -> bool {
     let cfg = gpt::GptConfig::new().writable(false);
     let is_mbr = match cfg.open(path) {
         Ok(e) => false,
-        Err(x) => true
+        Err(x) => {
+                    println!("[is_mbr] Error {:?} ", x);
+                    true
+        }
     };
 
     is_mbr
