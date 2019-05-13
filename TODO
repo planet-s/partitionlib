@@ -1,0 +1,2 @@
+i) Add support to detect the partition type
+ii) Planned support for btrfs, ext2, ext3, ext4, fat16, fat32, hfs, hfs+, linux-swap, ntfs, reiserfs, and xfs
