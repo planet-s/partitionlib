@@ -68,3 +68,9 @@ pub fn get_partitions(path: &Path) -> Result<Vec<Partition>> {
 
     Ok(res)
 }
+
+impl Partition {
+    pub fn to_offset(&self) -> u64 {
+        self.start_lba * 512
+    }
+}
