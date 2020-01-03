@@ -1,15 +1,25 @@
 extern crate partitionlib;
 
-use partitionlib::{get_partitions, is_mbr};
+use partitionlib::{get_partitions_from_file, LogicalBlockSize};
 
 #[test]
 fn test_gpt() {
-    let res = is_mbr(std::path::Path::new("./resources/disk.img"));
-    assert!(!res);
+    assert!(dbg!(
+        get_partitions_from_file("./resources/disk.img", LogicalBlockSize::Lb512)
+            .unwrap()
+            .unwrap()
+    )
+    .kind
+    .is_gpt());
 }
 
 #[test]
 fn test_mbr() {
-    let res = is_mbr(std::path::Path::new("./resources/disk_mbr.img"));
-    assert!(res);
+    assert!(
+        get_partitions_from_file("./resources/disk_mbr.img", LogicalBlockSize::Lb512)
+            .unwrap()
+            .unwrap()
+            .kind
+            .is_mbr()
+    );
 }
