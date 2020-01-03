@@ -72,6 +72,6 @@ impl Header {
 }
 impl Entry {
     pub fn is_valid(&self) -> bool {
-        self.drive_attrs == 0 || self.drive_attrs == 0x80
+        (self.drive_attrs == 0 || self.drive_attrs == 0x80) && self.len != 0
     }
 }
