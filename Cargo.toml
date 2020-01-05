@@ -3,8 +3,9 @@ name = "partitionlib"
 version = "0.1.0"
 authors = ["Deepak Sirone <deepaksirone94@gmail.com>"]
 edition = "2018"
+license = "MIT"
 
 [dependencies]
-gpt = { git = "https://github.com/4lDO2/gpt" }
+gpt = { git = "https://gitlab.redox-os.org/redox-os/gpt" }
 scroll = { version = "0.10", features = ["derive"] }
 uuid = { version = "~0.7", features = ["v4"] }
